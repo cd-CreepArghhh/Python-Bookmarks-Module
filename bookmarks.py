@@ -72,8 +72,7 @@ def add_bookmark(bookmark):
 
 
 def remove_bookmark(bookmark):
-    print("If you have too many bookmarks, this may take a while.\
- DO NOT terminate the process as that may delete many of your bookmarks.")
+    print("If you have too many bookmarks, this may take a while. DO NOT terminate the process as that may delete many of your bookmarks.")
     f = open("Bookmarks.txt", "r")
     txt = f.readlines()
     f.close()
