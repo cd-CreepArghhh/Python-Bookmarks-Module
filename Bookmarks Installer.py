@@ -1,5 +1,6 @@
 import sys
 import os
+import urllib.request
 
 path = None
 
@@ -22,8 +23,10 @@ path += r"\site-packages"
 print("[Information] Creating module...")
 
 f = open(path + r"\bookmarks.py", "w")
-program = open("bookmarks.py", "r")
-f.writelines(program.readlines())
+url = "https://raw.githubusercontent.com/cd-CreepArghhh/Python-Bookmarks-Module/master/bookmarks.py"
+file = urllib.request.urlopen(url)
+program_content = [line.decode("utf-8") for line in file]
+f.writelines(program_content)
 f.close()
 
 open(path + r"\__pycache__\Bookmarks.txt", "w").close()
