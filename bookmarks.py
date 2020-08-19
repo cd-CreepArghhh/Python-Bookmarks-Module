@@ -1,3 +1,6 @@
+import site
+import platform
+
 def main():
     args = sys.argv
     if len(args) < 2:
@@ -20,11 +23,17 @@ def main():
         uninstall()
 
 
-def get_lib_path():
-    for pathItem in sys.path:
-        if pathItem.endswith(r"\lib"):
-            return pathItem
-
+path = None
+if platform.system() == "Linux":
+    for site_path in site.getsitepackages():
+        if site_path.endswith("dist-packages"):
+            path = site_path
+            break
+else:
+    for site_path in site.getsitepackages():
+        if site_path.endswith("site-packages"):
+            path = site_path
+            break
 
 def usage():
     print("""Usage:
@@ -72,7 +81,8 @@ def add_bookmark(bookmark):
 
 
 def remove_bookmark(bookmark):
-    print("If you have too many bookmarks, this may take a while. DO NOT terminate the process as that may delete many of your bookmarks.")
+    print("If you have too many bookmarks, this may take a while.\
+ DO NOT terminate the process as that may delete many of your bookmarks.")
     f = open("Bookmarks.txt", "r")
     txt = f.readlines()
     f.close()
@@ -116,8 +126,8 @@ def replace_bookmark(old_bookmark):
 def uninstall():
     print("Uninstalling...")
     print("Note: uninstalling will not clear your bookmarks.")
-    os.remove(get_lib_path() + "\\site-packages\\bookmarks.py")
-    os.remove(get_lib_path() + "\\site-packages\\__pycache__\\bookmarks.cpython-38.pyc")
+    os.remove(path + r"\bookmarks.py")
+    os.remove(path + "\\__pycache__\\")
 
 
 if __name__ == '__main__':
